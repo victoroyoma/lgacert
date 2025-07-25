@@ -125,76 +125,62 @@ const Home: React.FC = () => {
         <div className="absolute top-0 left-0 w-40 h-40 bg-green-100 rounded-full opacity-30 blur-2xl -z-10" style={{top: '-60px', left: '-60px'}}></div>
         <div className="absolute bottom-0 right-0 w-60 h-60 bg-green-200 rounded-full opacity-20 blur-2xl -z-10" style={{bottom: '-80px', right: '-80px'}}></div>
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-12 items-center">
-            {/* Info Card with floating effect */}
-            <div className="md:w-1/2 w-full animate-fadeInUp floating-card bg-white/90 rounded-3xl shadow-2xl p-10 relative z-10">
-              <div className="flex items-center mb-4">
-                <div className="bg-green-100 p-3 inline-block rounded-full mr-3 animate-bounce">
-                  <Users2Icon size={36} className="text-green-600" />
-                </div>
-                <span className="bg-yellow-200 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full ml-2 animate-pulse shadow">No NIN Required</span>
+          <div className="max-w-4xl mx-auto animate-fadeInUp floating-card bg-white/90 rounded-3xl shadow-2xl p-10 relative z-10">
+            <div className="flex items-center mb-4">
+              <div className="bg-green-100 p-3 inline-block rounded-full mr-3 animate-bounce">
+                <Users2Icon size={36} className="text-green-600" />
               </div>
-              <h2 className="text-3xl font-bold mb-4 text-green-900">
-                Certificate Applications for Minors
-              </h2>
-              <p className="text-gray-700 mb-8 text-base">
-                Now, parents or legal guardians can easily apply for certificates on behalf of minors (under 18 years) without the need for a NIN. The process is simple, secure, and designed for families.
-              </p>
-              {/* Timeline Stepper */}
-              <div className="timeline space-y-8">
-                <div className="flex items-start animate-fadeInUp" style={{animationDelay: '0.1s'}}>
-                  <div className="bg-green-100 p-2 rounded-full mr-4 mt-1 shadow animate-pulse">
-                    <HeartHandshakeIcon size={24} className="text-green-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Guardian Authorization</h4>
-                    <p className="text-gray-600 text-sm">Parents or legal guardians can provide authorization documents instead of NIN.</p>
-                  </div>
+              <span className="bg-yellow-200 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full ml-2 animate-pulse shadow">No NIN Required</span>
+            </div>
+            <h2 className="text-3xl font-bold mb-4 text-green-900">
+              Certificate Applications for Minors
+            </h2>
+            <p className="text-gray-700 mb-8 text-base">
+              Now, parents or legal guardians can easily apply for certificates on behalf of minors (under 18 years) without the need for a NIN. The process is simple, secure, and designed for families.
+            </p>
+            {/* Timeline Stepper */}
+            <div className="timeline space-y-8">
+              <div className="flex items-start animate-fadeInUp" style={{animationDelay: '0.1s'}}>
+                <div className="bg-green-100 p-2 rounded-full mr-4 mt-1 shadow animate-pulse">
+                  <HeartHandshakeIcon size={24} className="text-green-600" />
                 </div>
-                <div className="flex items-start animate-fadeInUp" style={{animationDelay: '0.2s'}}>
-                  <div className="bg-blue-100 p-2 rounded-full mr-4 mt-1 shadow animate-bounce">
-                    <ClipboardCheckIcon size={24} className="text-blue-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Required Documents</h4>
-                    <p className="text-gray-600 text-sm">Birth certificate, guardian's ID, and authorization letter (if guardian is not a parent).</p>
-                  </div>
-                </div>
-                <div className="flex items-start animate-fadeInUp" style={{animationDelay: '0.3s'}}>
-                  <div className="bg-purple-100 p-2 rounded-full mr-4 mt-1 shadow animate-bounce">
-                    <CheckCircleIcon size={24} className="text-purple-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Simple Process</h4>
-                    <p className="text-gray-600 text-sm">Our streamlined application process makes it easy for guardians to apply on behalf of minors.</p>
-                  </div>
-                </div>
-                <div className="flex items-start animate-fadeInUp" style={{animationDelay: '0.4s'}}>
-                  <div className="bg-yellow-100 p-2 rounded-full mr-4 mt-1 shadow animate-bounce">
-                    <CheckCircleIcon size={24} className="text-yellow-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Family Friendly</h4>
-                    <p className="text-gray-600 text-sm">No NIN required for minors. Designed for ease and peace of mind for families.</p>
-                  </div>
+                <div>
+                  <h4 className="font-semibold mb-1">Guardian Authorization</h4>
+                  <p className="text-gray-600 text-sm">Parents or legal guardians can provide authorization documents instead of NIN.</p>
                 </div>
               </div>
-              <div className="mt-10">
-                <Link to="/apply" className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 shadow-lg transition-all duration-200 text-lg animate-fadeInUp" style={{animationDelay: '0.5s'}}>
-                  Apply for a Minor
-                </Link>
+              <div className="flex items-start animate-fadeInUp" style={{animationDelay: '0.2s'}}>
+                <div className="bg-blue-100 p-2 rounded-full mr-4 mt-1 shadow animate-bounce">
+                  <ClipboardCheckIcon size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-1">Required Documents</h4>
+                  <p className="text-gray-600 text-sm">Birth certificate, guardian's ID, and authorization letter (if guardian is not a parent).</p>
+                </div>
+              </div>
+              <div className="flex items-start animate-fadeInUp" style={{animationDelay: '0.3s'}}>
+                <div className="bg-purple-100 p-2 rounded-full mr-4 mt-1 shadow animate-bounce">
+                  <CheckCircleIcon size={24} className="text-purple-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-1">Simple Process</h4>
+                  <p className="text-gray-600 text-sm">Our streamlined application process makes it easy for guardians to apply on behalf of minors.</p>
+                </div>
+              </div>
+              <div className="flex items-start animate-fadeInUp" style={{animationDelay: '0.4s'}}>
+                <div className="bg-yellow-100 p-2 rounded-full mr-4 mt-1 shadow animate-bounce">
+                  <CheckCircleIcon size={24} className="text-yellow-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-1">Family Friendly</h4>
+                  <p className="text-gray-600 text-sm">No NIN required for minors. Designed for ease and peace of mind for families.</p>
+                </div>
               </div>
             </div>
-            {/* Image Card with floating effect and full cover */}
-            <div className="md:w-1/2 w-full animate-fadeInUp floating-card flex items-center justify-center min-h-[320px] md:min-h-[420px]" style={{animationDelay: '0.2s'}}>
-              <div className="relative w-full h-72 md:h-96 flex items-center justify-center">
-                <img
-                  src="https://img.freepik.com/free-photo/african-american-parents-with-daughter-home_23-2148466387.jpg"
-                  alt="Family with child"
-                  className="rounded-3xl shadow-2xl w-full h-full object-cover object-center border-4 border-green-100 transition-transform duration-300 hover:scale-105"
-                  style={{maxHeight: '100%', maxWidth: '100%'}}
-                />
-              </div>
+            <div className="mt-10">
+              <Link to="/apply" className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 shadow-lg transition-all duration-200 text-lg animate-fadeInUp" style={{animationDelay: '0.5s'}}>
+                Apply for a Minor
+              </Link>
             </div>
           </div>
         </div>
