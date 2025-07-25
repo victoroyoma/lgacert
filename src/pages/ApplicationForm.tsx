@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import FormStep from '../components/FormStep';
 import PaymentProcessor from '../components/PaymentProcessor';
 import MinorApplicationSection from '../components/MinorApplicationSection';
-import { UserIcon, MapPinIcon, FileIcon, CheckCircleIcon, ArrowLeftIcon, ArrowRightIcon, UploadIcon, CreditCardIcon, Users2Icon } from 'lucide-react';
+import { UserIcon, MapPinIcon, FileIcon, CheckCircleIcon, ArrowLeftIcon, ArrowRightIcon, UploadIcon, CreditCardIcon } from 'lucide-react';
 const ApplicationForm: React.FC = () => {
   const {
     isAuthenticated
@@ -15,7 +15,9 @@ const ApplicationForm: React.FC = () => {
   const [isMinorApplication, setIsMinorApplication] = useState(false);
   const [formData, setFormData] = useState({
     // Personal Information
-    fullName: '',
+    firstName: '',
+    surname: '',
+    middleName: '', // optional
     gender: '',
     dateOfBirth: '',
     phone: '',
@@ -55,7 +57,9 @@ const ApplicationForm: React.FC = () => {
   const validateStep = (step: number) => {
     const newErrors: Record<string, string> = {};
     if (step === 1) {
-      if (!formData.fullName) newErrors.fullName = 'Full name is required';
+      if (!formData.firstName) newErrors.firstName = 'First name is required';
+      if (!formData.surname) newErrors.surname = 'Surname is required';
+      // middleName is optional
       if (!formData.gender) newErrors.gender = 'Gender is required';
       if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required';
       if (!formData.phone) newErrors.phone = 'Phone number is required';
@@ -266,13 +270,24 @@ const ApplicationForm: React.FC = () => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
-                      {isMinorApplication ? "Minor's Full Name" : 'Full Name'}
+                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
+                      First Name
                     </label>
-                    <input type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleInputChange} className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.fullName ? 'border-red-500' : 'border-gray-300'}`} placeholder={isMinorApplication ? "Enter minor's full name" : 'Enter your full name'} />
-                    {errors.fullName && <p className="mt-1 text-sm text-red-600">
-                        {errors.fullName}
-                      </p>}
+                    <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleInputChange} className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.firstName ? 'border-red-500' : 'border-gray-300'}`} placeholder={isMinorApplication ? "Enter minor's first name" : 'Enter your first name'} />
+                    {errors.firstName && <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor="surname" className="block text-sm font-medium text-gray-700 mb-1">
+                      Surname
+                    </label>
+                    <input type="text" id="surname" name="surname" value={formData.surname} onChange={handleInputChange} className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.surname ? 'border-red-500' : 'border-gray-300'}`} placeholder={isMinorApplication ? "Enter minor's surname" : 'Enter your surname'} />
+                    {errors.surname && <p className="mt-1 text-sm text-red-600">{errors.surname}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor="middleName" className="block text-sm font-medium text-gray-700 mb-1">
+                      Middle Name <span className="text-gray-400">(optional)</span>
+                    </label>
+                    <input type="text" id="middleName" name="middleName" value={formData.middleName} onChange={handleInputChange} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 border-gray-300" placeholder={isMinorApplication ? "Enter minor's middle name (optional)" : 'Enter your middle name (optional)'} />
                   </div>
                   <div>
                     <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-1">
@@ -283,9 +298,7 @@ const ApplicationForm: React.FC = () => {
                       <option value="male">Male</option>
                       <option value="female">Female</option>
                     </select>
-                    {errors.gender && <p className="mt-1 text-sm text-red-600">
-                        {errors.gender}
-                      </p>}
+                    {errors.gender && <p className="mt-1 text-sm text-red-600">{errors.gender}</p>}
                   </div>
                   <div>
                     <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700 mb-1">
@@ -529,7 +542,7 @@ const ApplicationForm: React.FC = () => {
                         {isMinorApplication ? "Minor's Name:" : 'Full Name:'}
                       </dt>
                       <dd className="text-sm text-gray-900 col-span-2">
-                        {formData.fullName || 'Not provided'}
+                        {`${formData.surname} ${formData.firstName}${formData.middleName ? ' ' + formData.middleName : ''}`.trim() || 'Not provided'}
                       </dd>
                     </div>
                     {isMinorApplication && <div className="py-2 grid grid-cols-3">
@@ -550,23 +563,24 @@ const ApplicationForm: React.FC = () => {
                     </div>
                     <div className="py-2 grid grid-cols-3">
                       <dt className="text-sm font-medium text-gray-500">
-                        LGA:
-                      </dt>
-                      <dd className="text-sm text-gray-900 col-span-2">
-                        {formData.lga || 'Not selected'}
-                      </dd>
-                    </div>
-                    <div className="py-2 grid grid-cols-3">
-                      <dt className="text-sm font-medium text-gray-500">
-                        Community:
-                      </dt>
-                      <dd className="text-sm text-gray-900 col-span-2">
-                        {formData.community || 'Not provided'}
-                      </dd>
-                    </div>
-                    <div className="py-2 grid grid-cols-3">
-                      <dt className="text-sm font-medium text-gray-500">
-                        Payment:
+                  <div>
+                    <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700 mb-1">
+                      Date of Birth
+                    </label>
+                    <input type="date" id="dateOfBirth" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleInputChange} className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.dateOfBirth ? 'border-red-500' : 'border-gray-300'}`} />
+                    {errors.dateOfBirth && <p className="mt-1 text-sm text-red-600">{errors.dateOfBirth}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                      Phone Number
+                    </label>
+                    <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.phone ? 'border-red-500' : 'border-gray-300'}`} placeholder="Enter phone number" />
+                    {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
+                  </div>
+                  {!isMinorApplication && <div className="md:col-span-2">
+                      <input type="text" id="nin" name="nin" value={formData.nin} onChange={handleInputChange} className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.nin ? 'border-red-500' : 'border-gray-300'}`} placeholder="Enter your 11-digit NIN" />
+                      {errors.nin && <p className="mt-1 text-sm text-red-600">{errors.nin}</p>}
+                    </div>}
                       </dt>
                       <dd className="text-sm text-gray-900 col-span-2">
                         ₦{getCertificatePrice().toLocaleString()} (Paid) -
