@@ -4,6 +4,9 @@ import { useAuth } from '../context/AuthContext';
 import FormStep from '../components/FormStep';
 import PaymentProcessor from '../components/PaymentProcessor';
 import MinorApplicationSection from '../components/MinorApplicationSection';
+import Alert from '../components/Alert';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { FormValidator, commonValidationRules } from '../utils/validation';
 import { UserIcon, MapPinIcon, FileIcon, CheckCircleIcon, ArrowLeftIcon, ArrowRightIcon, UploadIcon, CreditCardIcon } from 'lucide-react';
 const ApplicationForm: React.FC = () => {
   const {
@@ -43,6 +46,7 @@ const ApplicationForm: React.FC = () => {
     // Payment
     paymentComplete: false,
     transactionId: '',
+    receiptData: null as any,
     // Declaration
     declaration: false
   });
@@ -174,11 +178,12 @@ const ApplicationForm: React.FC = () => {
       setErrors(newErrors);
     }
   };
-  const handlePaymentComplete = (transactionId: string) => {
+  const handlePaymentComplete = (transactionId: string, receiptData: any) => {
     setFormData({
       ...formData,
       paymentComplete: true,
-      transactionId: transactionId
+      transactionId: transactionId,
+      receiptData: receiptData
     });
     // Move to next step after payment is complete
     setTimeout(() => {
@@ -194,6 +199,22 @@ const ApplicationForm: React.FC = () => {
       try {
         // In a real application, you would send the formData to your backend
         await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Generate application ID
+        const applicationId = `APP-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+        
+        // Show success message with receipt option
+        const successMessage = (
+          <div className="space-y-3">
+            <p>Your certificate application has been submitted successfully!</p>
+            <div className="bg-green-50 p-3 rounded border border-green-200">
+              <p className="text-sm"><strong>Application ID:</strong> {applicationId}</p>
+              <p className="text-sm"><strong>Transaction ID:</strong> {formData.transactionId}</p>
+            </div>
+            <p className="text-sm">You will receive updates on your application status via email.</p>
+          </div>
+        );
+        
         // Redirect to dashboard after successful submission
         navigate('/dashboard');
       } catch (error) {
@@ -504,7 +525,13 @@ const ApplicationForm: React.FC = () => {
                           </p>
                         </div>
                       </div>
-                    </div> : <PaymentProcessor amount={getCertificatePrice()} certificateType={formData.certificateType} onPaymentComplete={handlePaymentComplete} onCancel={() => handlePrevious()} />}
+                    </div> : <PaymentProcessor 
+                      amount={getCertificatePrice()} 
+                      certificateType={formData.certificateType} 
+                      onPaymentComplete={handlePaymentComplete} 
+                      onCancel={() => handlePrevious()} 
+                      applicantName={`${formData.surname} ${formData.firstName}${formData.middleName ? ' ' + formData.middleName : ''}`.trim()}
+                    />}
                 </div>
               </FormStep>
               <FormStep title="Declaration and Submission" currentStep={currentStep} stepNumber={5}>
